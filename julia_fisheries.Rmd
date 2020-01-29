@@ -58,7 +58,7 @@ ggplot(salmon_us_annual,
   scale_color_paletteer_d("calecopal::figmtn") # use "View(palettes_d_names)" in the console to view all the available pallettes
 
 ```
-
+![](https://octodex.github.com/images/hula_loop_octodex03.gif)
 
 
 
