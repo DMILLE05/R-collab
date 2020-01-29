@@ -52,3 +52,6 @@ ggplot (data = salmon_us_annual, aes(x=year,y=tot_value, group=subgroup)) +
 library(paletteer)
 ```
 
+![](https://octodex.github.com/images/scubatocat.png)
+
+
