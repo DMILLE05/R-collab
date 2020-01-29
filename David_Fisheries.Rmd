@@ -1,0 +1,54 @@
+---
+title: "Collab example 2"
+author: "David Miller"
+date: "1/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+read in noaa_landings
+```{r}
+us_landings <- read_csv(here("data","noaa_landings.csv"),
+                        na = "no data")
+```
+
+```{r}
+salmon_clean<-us_landings %>%
+clean_names() %>%
+  mutate(afs_name = str_to_lower(afs_name)) %>%
+  mutate(dollars_num = parse_number(dollars_usd)) %>%
+  filter(str_detect(afs_name, pattern = "salmon")) %>%
+  separate(afs_name, into = c("salmon_group", "subgroup"), sep = ", ")  %>%
+  drop_na (dollars_num)
+```
+```{r}
+salmon_us_annual <- salmon_clean %>%
+  group_by(year, subgroup) %>%
+  summarize(
+    tot_value = sum(dollars_num, na.rm = TRUE)
+  )
+
+# create a line grah with tot value y, years x
+ggplot (data = salmon_us_annual, aes(x=year,y=tot_value, group=subgroup)) + 
+  geom_line (aes(color=subgroup)) + theme_bw() +
+  labs(x = "Year", y = "US commercial salmon value (USD)",
+       title = 'My awesome graph that is just really cool') +
+  scale_color_paletteer_d("colRoz::uluru")
+
+
+
+
+
+```
+```{r}
+library(paletteer)
+```
+
